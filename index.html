@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chúc mừng 20/10 💖</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #ffe6f0;
+    font-family: "Times New Roman", serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .container {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1, p {
+    color: #d63384;
+  }
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 22px;
+    margin: 10px 0;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid #d63384;
+    border-radius: 10px;
+    outline: none;
+    text-align: center;
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background-color: #ff99c8;
+    border: none;
+    border-radius: 20px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #ff66a3;
+  }
+
+  .message-box {
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 2px solid #ff99c8;
+    border-radius: 15px;
+    padding: 25px 40px;
+    display: inline-block;
+    margin: 20px auto;
+    box-shadow: 0 0 10px rgba(255, 153, 200, 0.5);
+    animation: fadeIn 1s ease forwards;
+  }
+
+  .heart {
+    position: absolute;
+    color: #ff80bf;
+    font-size: 24px;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    from { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    animation: fadeIn 1s ease forwards;
+  }
+
+  footer {
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+    color: white;
+    font-size: 14px;
+    font-family: "Times New Roman", serif;
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="nameInput">
+  <h1>Tên của cậu là gì?</h1>
+  <input type="text" id="name" placeholder="Nhập tên của cậu...">
+  <br>
+  <button onclick="showWish()">Ấn để tiếp tục</button>
+</div>
+
+<div class="container hidden" id="wishContainer">
+  <div class="message-box">
+    <p id="wish" class="fade-in"></p>
+    <p id="nextText" class="fade-in hidden"></p>
+  </div>
+  <button id="nextButton" onclick="showNext()">Đọc tiếp</button>
+</div>
+
+<footer>Code by PDat</footer>
+
+<script>
+  const wishes = [
+    "Nhân ngày 20/10, con trai chúng mình chúc {name} luôn xinh đẹp, học tập tốt và luôn mang lại năng lượng tích cực cho lớp nhé!",
+    "Mừng 20/10! {name} ơi, chúc cậu luôn rạng rỡ, đạt kết quả cao trong học tập và là 'nguồn điện' tích cực cho mọi người trong lớp mình nha.",
+    "Thay mặt các bạn nam, chúc {name} ngày Phụ nữ Việt Nam thật vui! Chúc cậu mãi xinh xắn, học giỏi và lan tỏa niềm vui đến cả lớp mình nhé!",
+    "Gửi đến {name} lời chúc 20/10 ngọt ngào nhất! Chúc cậu luôn tươi tắn, chinh phục mọi điểm 10 và là cô gái mang đến nụ cười cho mọi người.",
+    "Ngày 20/10 này, {name} hãy thật vui vẻ nhé! Chúc cậu luôn giữ nụ cười xinh, học hành tấn tới và lúc nào cũng tràn đầy năng lượng lạc quan.",
+    "Chúc {name} một ngày 20/10 thật ý nghĩa! Chúc cậu ngày càng xinh đẹp, học hành tiến bộ và là 'mặt trời nhỏ' ấm áp của lớp mình.",
+    "Mừng ngày Phụ nữ Việt Nam! Chúc {name} luôn xinh, luôn giỏi, luôn hạnh phúc và cứ mãi là cô bạn tích cực, tuyệt vời của lớp mình nha!",
+    "{name} thân mến, con trai chúng mình chúc cậu 20/10 thật nhiều niềm vui! Cậu hãy cứ xinh đẹp, học tập chăm chỉ và làm cho lớp mình vui vẻ hơn nữa nhé.",
+    "Nhân dịp 20/10, chúc cô bạn {name} của lớp ta luôn trẻ trung, thành công trong học tập và là 'ngọn lửa' nhiệt huyết, vui tươi của tập thể.",
+    "Lớp mình rất vui vì có cậu! Chúc {name} ngày 20/10 thật đặc biệt, mãi xinh, mãi giỏi, và luôn mang đến sự lạc quan, tích cực cho cả lớp.",
+    "Nhân ngày 20/10, con trai lớp mình chúc {name} luôn thật rạng ngời, học hành xuất sắc và là nguồn động viên tích cực nhất của lớp ta!",
+    "Mừng ngày Phụ nữ Việt Nam! Chúc {name} luôn đáng yêu, học tập đạt điểm cao và tiếp tục lan tỏa năng lượng vui vẻ, lạc quan đến mọi người.",
+    "{name} ơi, 20/10 vui vẻ nha! Chúc cậu mãi xinh đẹp như hoa, giỏi giang hơn nữa và luôn mang đến tiếng cười cho lớp mình.",
+    "Gửi {name} lời chúc tốt đẹp nhất ngày 20/10! Chúc cậu học giỏi, luôn mạnh khỏe, tự tin và duy trì tinh thần tích cực mọi lúc.",
+    "Thay mặt các bạn nam, chúc {name} ngày 20/10 tràn ngập quà và hoa! Chúc cậu học tập tiến bộ không ngừng và lúc nào cũng là cô gái đầy năng lượng.",
+    "Chúc {name} không chỉ hôm nay mà 365 ngày đều xinh đẹp, gặt hái thành công trong học tập và luôn là thành viên tích cực của lớp nhé!",
+    "Mừng 20/10! Chúc {name} luôn giữ nụ cười tươi tắn, chinh phục được mọi môn học và là 'vitamin C' giúp cả lớp luôn vui vẻ.",
+    "{name} là cô gái tuyệt vời của lớp! Chúc cậu 20/10 hạnh phúc, luôn đạt được mục tiêu học tập và mãi là nguồn cảm hứng tích cực cho chúng mình.",
+    "Con trai chúng mình chúc {name} một ngày 20/10 thật đáng nhớ! Chúc cậu xinh đẹp, học tập đạt kết quả như ý và luôn truyền năng lượng vui vẻ cho bạn bè.",
+    "Chúc {name} ngày Phụ nữ Việt Nam luôn tươi tắn, học hành ngày càng giỏi giang và là cô bạn đáng mến, tích cực mà ai cũng yêu quý!"
+  ];
+
+  function showWish() {
+    const name = document.getElementById("name").value.trim();
+    if (name === "") return alert("Cậu quên nhập tên rồi kìa 🥰");
+    
+    document.getElementById("nameInput").classList.add("hidden");
+
+    const wishText = wishes[Math.floor(Math.random() * wishes.length)].replaceAll("{name}", name);
+    document.getElementById("wish").innerText = wishText;
+    document.getElementById("wishContainer").classList.remove("hidden");
+  }
+
+  function showNext() {
+    const name = document.getElementById("name").value.trim();
+    const text = `Và cậu hãy chuẩn bị tâm lý và sẵn sàng đến với những bất ngờ của tụi mình dành cho ${name} nhé 💖`;
+    document.getElementById("nextText").innerText = text;
+    document.getElementById("nextText").classList.remove("hidden");
+    document.getElementById("nextButton").classList.add("fade-in");
+  }
+
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💗";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 3 + Math.random() * 3 + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }
+  setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
